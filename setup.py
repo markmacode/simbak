@@ -11,15 +11,20 @@ setuptools.setup(
     description='A simple backup solution that\'s light and portable',
     long_description=long_description,
     long_description_content_type='text/markdown',
+    python_requires='>=3.5',
+    packages=setuptools.find_packages(),
     url='https://github.com/mark-bromell/simbak',
     project_urls={
         'Code': 'https://github.com/mark-bromell/simbak',
     },
-    packages=setuptools.find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.5',
+    entry_points={
+        'console_scripts': [
+            'simbak = simbak.__main__:main'
+        ]
+    },
 )
