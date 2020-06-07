@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     url='https://github.com/mark-bromell/simbak',
     project_urls={
-        'Code': 'https://github.com/mark-bromell/simbak',
+        'Source Code': 'https://github.com/mark-bromell/simbak',
     },
     classifiers=[
         'Programming Language :: Python :: 3',
@@ -24,7 +24,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'simbak = simbak.__main__:main'
-        ]
+            'simbak = simbak.__main__:main',
+        ],
     },
 )
