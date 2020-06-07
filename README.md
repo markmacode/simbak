@@ -67,7 +67,7 @@ simbak.backup(
 )
 ```
 
-You can then run this script through the terminal `python backup.py`.
+You can then run this script through the terminal using  `$ python backup.py`.
 
 #### Bash script example
 
@@ -88,7 +88,7 @@ simbak \
 
 #### Terminal
 
-Using simbak directly in the terminal isn't recommended unless you are backing up one directory or file to one location, as you can see the lines can get quite line.
+Using simbak directly in the terminal isn't recommended unless you are backing up one directory or file to one location, as you can see the lines can get quite long.
 
 ```bash
 $ simbak -s "/home/projects/my_project/" "/home/docs/important.txt" -d "/local/backups/" "/remote/backups/" --name "important"
