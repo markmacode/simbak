@@ -1,10 +1,10 @@
-import os
-import tarfile
-import logging
-from datetime import datetime
-from shutil import copyfile
+import os as _os
+import tarfile as _tarfile
+import logging as _logging
+from datetime import datetime as _datetime
+from shutil import copyfile as _copyfile
 
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+_logging.basicConfig(format='%(levelname)s: %(message)s', level=_logging.DEBUG)
 
 
 def _filter_paths(paths: list, create=False) -> list:
@@ -15,14 +15,14 @@ def _filter_paths(paths: list, create=False) -> list:
     filtered_paths = []
 
     for path in paths:
-        normpath = os.path.normpath(path)
+        normpath = _os.path.normpath(path)
 
-        if os.path.exists(normpath):
+        if _os.path.exists(normpath):
             filtered_paths.append(normpath)
         elif create == True:
-            logging.info(
+            _logging.info(
                 f'{normpath} doesn\'t exist, creating directory with that path.')
-            os.makedirs(normpath)
+            _os.makedirs(normpath)
             filtered_paths.append(normpath)
 
     return filtered_paths
@@ -30,31 +30,31 @@ def _filter_paths(paths: list, create=False) -> list:
 
 def _unique_file_name(file_name: str) -> str:
     """Creates a unique file name by suffixing date and time"""
-    time_suffix = datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
+    time_suffix = _datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
     file_name = f'{file_name}--{time_suffix}.tar.gz'
     return file_name
 
 
 def _create_backup(sources: list, destination: str, name: str, compression_level: int):
     """Creates the backup file in the first destination"""
-    first_path = os.path.join(destination, name)
+    first_path = _os.path.join(destination, name)
 
     try:
-        tar = tarfile.open(first_path, 'x:gz', compresslevel=compression_level)
+        tar = _tarfile.open(first_path, 'x:gz', compresslevel=compression_level)
 
         for source in sources:
-            basename = os.path.basename(source)
-            logging.info(f'Compressing {source}')
+            basename = _os.path.basename(source)
+            _logging.info(f'Compressing {source}')
             try:
                 tar.add(source, basename)
             except PermissionError:
-                logging.error(
+                _logging.error(
                     f'Couldn\'t compress {source}, pemission denied.')
 
         tar.close()
-        logging.info(f'Saved backup {name} to {destination}')
+        _logging.info(f'Saved backup {name} to {destination}')
     except FileExistsError:
-        logging.error(f'Failed to create backup {name}, file already exists')
+        _logging.error(f'Failed to create backup {name}, file already exists')
 
     return first_path
 
@@ -62,9 +62,9 @@ def _create_backup(sources: list, destination: str, name: str, compression_level
 def _distribute_backup(backup_path: str, destinations: list, name: str):
     """Copy backup file to each of the destinations"""
     for destination in destinations:
-        path = os.path.join(destination, name)
-        copyfile(backup_path, path)
-        logging.info(f'Saved backup {name} to {destination}')
+        path = _os.path.join(destination, name)
+        _copyfile(backup_path, path)
+        _logging.info(f'Saved backup {name} to {destination}')
 
 
 def backup(sources: list, destinations: list, name: str, compression_level: int = 6):
