@@ -1,5 +1,5 @@
 import argparse
-import simbak
+from . import simbak
 
 
 def parse_args():
