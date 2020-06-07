@@ -1,6 +1,6 @@
 import sys
 import argparse
-from . import simbak
+from simbak import simbak
 
 
 def parse_args():
