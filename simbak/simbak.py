@@ -1,10 +1,11 @@
 import os as _os
 import tarfile as _tarfile
-import logging as _logging
+from simbak._logger import _get_logger
 from datetime import datetime as _datetime
 from shutil import copyfile as _copyfile
 
-_logging.basicConfig(format='%(levelname)s: %(message)s', level=_logging.DEBUG)
+
+_logger = _get_logger()
 
 
 def _filter_paths(paths: list, create=False) -> list:
@@ -20,12 +21,12 @@ def _filter_paths(paths: list, create=False) -> list:
         if _os.path.exists(normpath):
             filtered_paths.append(normpath)
         elif create == True:
-            _logging.info(
+            _logger.info(
                 f'{normpath} doesn\'t exist, creating directory with that path.')
             _os.makedirs(normpath)
             filtered_paths.append(normpath)
         else:
-            _logging.warning(f'Failed to access {normpath}, it doesn\'t exist')
+            _logger.warning(f'Failed to access {normpath}, it doesn\'t exist')
 
     return filtered_paths
 
@@ -42,21 +43,23 @@ def _create_backup(sources: list, destination: str, file_name: str, compression_
     first_path = _os.path.join(destination, file_name)
 
     try:
-        tar = _tarfile.open(first_path, 'x:gz', compresslevel=compression_level)
+        tar = _tarfile.open(first_path, 'x:gz',
+                            compresslevel=compression_level)
 
         for source in sources:
             basename = _os.path.basename(source)
-            _logging.info(f'Compressing {source}')
+            _logger.info(f'Compressing {source}')
             try:
                 tar.add(source, basename)
             except PermissionError:
-                _logging.error(
+                _logger.error(
                     f'Couldn\'t compress {source}, pemission denied.')
 
         tar.close()
-        _logging.info(f'Saved backup {file_name} to {destination}')
+        _logger.info(f'Saved backup {file_name} to {destination}')
     except FileExistsError:
-        _logging.error(f'Failed to create backup {file_name}, file already exists')
+        _logger.error(
+            f'Failed to create backup {file_name}, file already exists')
 
     return first_path
 
@@ -66,15 +69,15 @@ def _distribute_backup(backup_path: str, destinations: list, name: str):
     for destination in destinations:
         path = _os.path.join(destination, name)
         _copyfile(backup_path, path)
-        _logging.info(f'Saved backup {name} to {destination}')
+        _logger.info(f'Saved backup {name} to {destination}')
 
 
 def backup(sources: list, destinations: list, name: str, compression_level: int = 6):
-    _logging.info(f'Starting backup {name}')
+    _logger.info(f'Starting backup {name}')
     sources = _filter_paths(sources)
     destinations = _filter_paths(destinations, create=True)
     file_name = _unique_file_name(name)
-    _logging.info(f'Backup file name will be {name}')
+    _logger.info(f'Backup file name will be {name}')
 
     first_path = _create_backup(sources, destinations[0], file_name,
                                 compression_level)
