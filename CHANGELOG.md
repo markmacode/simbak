@@ -4,7 +4,6 @@ Date: **
 - Improved logging.
     - Added messages to make it more clear what simbak is doing.
     - Log files are now stored.
-- Added skeleton for testing
 
 # Version 0.1.0
 Date: *2020-06-07*
