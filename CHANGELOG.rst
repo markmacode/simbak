@@ -1,12 +1,10 @@
-# Version 0.1.1
-Date: **
+# v0.1.1
 ### General updates
 - Improved logging.
     - Added messages to make it more clear what simbak is doing.
     - Log files are now stored.
 
-# Version 0.1.0
-Date: *2020-06-07*
+# v0.1.0
 ### General updates
 - Completed the readme (for now).
 - Cleaned the imports of simbak so that it's clear what the public API is.
@@ -15,6 +13,5 @@ Date: *2020-06-07*
 ### Bug fixes
 - Fixed an issue where setup.py didn't actually package simbak itself.
 
-# Version 0.0.1
-Date: *2020-06-04*
+# v0.0.1
 - First version.
