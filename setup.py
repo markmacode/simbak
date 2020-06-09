@@ -5,7 +5,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
     name='simbak',
-    version='0.1.1',
+    version='0.1.0',
     author='Mark Bromell',
     author_email='markbromell.business@gmail.com',
     description='A simple backup solution that\'s light and portable',
