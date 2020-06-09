@@ -10,8 +10,10 @@ Simbak is a simple backup solution that is aimed towards individuals who just wa
 
 # Getting started
 
+**Note:** This is in early development and changes to the API may be frequent. This project uses [semantic versioning](https://semver.org). The format of versions are `{major}.{minor}.{patch}`, so so while we are at version `0.x.x` *assume* that each minor release has API changes. 
+
 ## Installation
-To install simbak you can simple use pip.
+To install simbak you can simple use [pip](https://pypi.org/project/pip/).
 
 ```bash
 $ pip install simbak
