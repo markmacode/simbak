@@ -1,3 +1,7 @@
+# v0.1.2
+### Bug fixes
+- Critical error with logging fixed, logging should now work normally.
+
 # v0.1.1
 ### General updates
 - Improved logging.

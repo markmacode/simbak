@@ -10,7 +10,7 @@ bump-major:
 release: dist
 	twine upload dist/*
 
-dist: clean
+build: clean
 	python setup.py sdist bdist_wheel
 	twine check dist/*
 

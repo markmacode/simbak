@@ -1,11 +1,11 @@
 import os as _os
 import tarfile as _tarfile
-from simbak._logger import _get_logger
+import logging as _logging
 from datetime import datetime as _datetime
 from shutil import copyfile as _copyfile
 
 
-_logger = _get_logger()
+_logger = _logging.getLogger(__name__)
 
 
 def _filter_paths(paths: list, create=False) -> list:
@@ -64,16 +64,16 @@ def _create_backup(sources: list, destination: str, file_name: str, compression_
     return first_path
 
 
-def _distribute_backup(backup_path: str, destinations: list, name: str):
+def _distribute_backup(backup_path: str, destinations: list, file_name: str):
     """Copy backup file to each of the destinations"""
     for destination in destinations:
-        path = _os.path.join(destination, name)
+        path = _os.path.join(destination, file_name)
         _copyfile(backup_path, path)
-        _logger.info(f'Saved backup {name} to {destination}')
+        _logger.info(f'Saved backup {file_name} to {destination}')
 
 
 def backup(sources: list, destinations: list, name: str, compression_level: int = 6):
-    _logger.info(f'Starting backup {name}')
+    _logger.info(f'Starting backup [{name}]')
     sources = _filter_paths(sources)
     destinations = _filter_paths(destinations, create=True)
     file_name = _unique_file_name(name)
