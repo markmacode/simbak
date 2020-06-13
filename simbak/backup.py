@@ -23,7 +23,7 @@ def backup_normal(sources: list, destinations: list, name: str,
 
 def _filter_paths(paths: list, create=False) -> list:
     """
-    Returned a list of paths that exist and cleans the path names. 
+    Returned a list of paths that exist and cleans the path names.
     Creates non-existing paths if the create param is True.
     """
     filtered_paths = []
@@ -33,9 +33,9 @@ def _filter_paths(paths: list, create=False) -> list:
 
         if _os.path.exists(normpath):
             filtered_paths.append(normpath)
-        elif create == True:
-            _logger.info(f'{normpath} doesn\'t exist, creating directory with'
-                         ' that path.')
+        elif create:
+            _logger.info(f'{normpath} doesn\'t exist, creating directory with '
+                         'that path.')
             _os.makedirs(normpath)
             filtered_paths.append(normpath)
         else:

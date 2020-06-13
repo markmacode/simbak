@@ -6,7 +6,7 @@ import logging.handlers as _handlers
 __version__ = '0.1.2'
 
 # Setting up logger
-if _os.path.exists('logs/') == False:
+if _os.path.exists('logs/'):
     _os.mkdir('logs/')
 
 _stream_formatter = _logging.Formatter('%(levelname)s: %(message)s')

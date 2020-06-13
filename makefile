@@ -35,4 +35,4 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	pylint simbak --confidence=HIGH
+	-flake8 simbak/
