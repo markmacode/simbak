@@ -7,12 +7,19 @@ bump-minor:
 bump-major:
 	bump2version major
 
-release: dist
+release: build
 	twine upload dist/*
 
 build: clean
 	python setup.py sdist bdist_wheel
 	twine check dist/*
+
+test: clean-test
+	tox
+
+coverage: clean-test
+	coverage run --source=simbak/
+	coverage html htmlcov/
 
 clean: clean-pyc clean-build clean-test
 
