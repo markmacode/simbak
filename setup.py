@@ -27,4 +27,7 @@ setuptools.setup(
             'simbak = simbak.__main__:main',
         ],
     },
+    install_requires=[
+        'deprecation',
+    ],
 )
