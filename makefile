@@ -1,11 +1,11 @@
 bump:
-	bumpversion patch
+	bump2version patch
 
 bump-minor:
-	bumpversion minor
+	bump2version minor
 
 bump-major:
-	bumpversion major
+	bump2version major
 
 release: dist
 	twine upload dist/*

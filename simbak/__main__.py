@@ -32,7 +32,8 @@ def parse_args():
         '-c', '--compression-level',
         type=int,
         default=6,
-        help='The compression level (1-9) of the gzip backup algorithm, default is 6.',
+        help=('The compression level (1-9) of the gzip backup algorithm, '
+              'default is 6.'),
     )
     return parser.parse_args()
 

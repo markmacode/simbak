@@ -1,0 +1,2 @@
+autopep8==1.5.3
+bumpversion==0.6.0
