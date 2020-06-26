@@ -40,9 +40,9 @@ $ python3 -m simbak [...]
 You can use simbak within your own python code, and you can make python scripts to use simbak (a python script is prettier than shell script).
 
 ```python
-from simbak import simbak
+from simbak import backup
 
-simbak.backup(...)
+backup.backup(...)
 ```
 
 ### Example usages
@@ -54,9 +54,9 @@ Each of these examples will achieve the same reults. They will create a backup o
 ```python
 # backup.py
 
-from simbak import simbak
+from simbak import backup
 
-simbak.backup(
+backup.backup(
     sources=[
         "/home/projects/my_project/",
         "/home/docs/important.txt",
