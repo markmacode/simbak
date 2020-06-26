@@ -1,9 +1,15 @@
-import sys
 import argparse
-from simbak import simbak
+import sys
+
+from simbak import backup
 
 
 def parse_args():
+    """Parses all the agruments sent through the command line.
+
+    Returns:
+        object: The parsed arguments.
+    """
     parser = argparse.ArgumentParser(
         prog='simbak',
         description='Simple backup solution.',
@@ -39,8 +45,9 @@ def parse_args():
 
 
 def main():
+    """Consider this the entry point to the command line utility."""
     args = parse_args()
-    simbak.backup(
+    backup.backup(
         sources=args.source,
         destinations=args.destination,
         name=args.name,
