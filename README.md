@@ -47,7 +47,7 @@ backup.backup(...)
 
 ### Example usages
 
-Each of these examples will achieve the same reults. They will create a backup of `/home/projects/my_project/` and `/home/docs/important.txt` and it will store the backup in `/backups/backups` and `/local/backups`. The backup will be a `tar.gz` file and it will have the name of `important--yyyy-mm-dd--hh-mm-ss`, the time is stamped at the end of the backup to ensure the file is unique and not conflicting with other backups.
+Each of these examples will achieve the same reults. They will create a backup of `/home/projects/my_project/` and `/home/docs/important.txt` and it will store the backup in `/backups/backups` and `/local/backups`. The backup will be a `tar.gz` file and it will have the name of `important--YYYY-MM-DD--hh-mm-ss`, the time is stamped at the end of the backup to ensure the file is unique and not conflicting with other backups.
 
 #### Python script example
 
