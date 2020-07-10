@@ -1,10 +1,10 @@
 import logging as _logging
-from simbak.backup.base import BackupBase as _BackupBase
+from simbak import file_util as _file_util
 
 _logger = _logging.getLogger(__name__)
 
 
-class BackupNormal(_BackupBase):
+class BackupNormal():
     def __init__(self, sources: list, destinations: list, name: str,
                  compression_level: int = 6):
         """Initialize of the BackupNormal object
@@ -17,7 +17,10 @@ class BackupNormal(_BackupBase):
             compression_level (int, optional): The gzip compression level that
                 you want to use for the backup. Defaults to 6.
         """
-        super().__init__(sources, destinations, name, compression_level)
+        self._sources = sources
+        self._destinations = destinations
+        self._name = name
+        self._compression_level = compression_level
 
     def backup(self):
         """Standard simbak backup.
@@ -27,17 +30,20 @@ class BackupNormal(_BackupBase):
         will be the name parameter suffixed with a time stamp, the format of
         the timestamp is YYYY-MM-DD--hh-mm-ss
         """
-        _logger.info(f'Starting backup [{self.name}]')
-        filtered_sources = self._filter_paths(self.sources)
-        filtered_destinations = self._filter_paths(
-            self.destinations, create=True)
-        file_name = self._unique_file_name(self.name)
-        _logger.info(f'Backup file name will be {self.name}')
+        _logger.info(f'Starting backup [{self._name}]')
+        filtered_sources = _file_util.filter_paths(self._sources)
+        filtered_destinations = _file_util.filter_paths(
+            self._destinations, create=True)
+        file_name = _file_util.unique_file_name(self._name)
+        _logger.info(f'Backup file name will be {self._name}')
 
-        first_path = self._create_backup(
-            filtered_sources,
-            filtered_destinations[0],
-            file_name,
-            self.compression_level
+        first_path = _file_util.create_targz(
+            sources=filtered_sources,
+            destination=filtered_destinations[0],
+            file_name=file_name,
+            compression_level=self._compression_level
         )
-        self._distribute_backup(first_path, filtered_destinations[1:])
+        _file_util.distribute_file(
+            path=first_path,
+            destinations=filtered_destinations[1:]
+        )
