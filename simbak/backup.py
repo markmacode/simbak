@@ -5,10 +5,14 @@ import os as _os
 import tarfile as _tarfile
 from datetime import datetime as _datetime
 from shutil import copyfile as _copyfile
+from deprecation import deprecated as _deprecated
+from simbak import __version__
 
 _logger = _logging.getLogger(__name__)
 
 
+@_deprecated(deprecated_in='0.2.0', current_version=__version__,
+             details='Use simbak.backup instead')
 def backup(sources: list, destinations: list, name: str,
            compression_level: int = 6):
     """Standard simbak backup.
