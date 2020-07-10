@@ -2,7 +2,7 @@ import logging as _logging
 import os as _os
 import tarfile as _tarfile
 from datetime import datetime as _datetime
-from shutil import copyfile as _copyfile
+import shutil as _shutil
 
 _logger = _logging.getLogger(__name__)
 
@@ -63,8 +63,8 @@ def distribute_file(path: str, destinations: list):
     file_name = _os.path.basename(path)
 
     for destination in destinations:
-        path = _os.path.join(destination, file_name)
-        _copyfile(path, path)
+        to_path = _os.path.join(destination, file_name)
+        _shutil.copyfile(path, to_path)
         _logger.info(f'Saved backup {file_name} to {destination}')
 
 
