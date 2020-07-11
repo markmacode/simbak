@@ -21,9 +21,8 @@ test-fast: clean-test
 	python -m pytest
 
 coverage: clean-test
-	coverage run --source=simbak/ -m pytest
+	coverage run -m pytest
 	coverage report -m
-	coverage html htmlcov/
 
 clean: clean-pyc clean-build clean-test
 

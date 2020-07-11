@@ -1,6 +1,6 @@
 import os
 from unittest.mock import patch
-from simbak.backup.normal import BackupNormal
+from simbak.agent.normal import BackupNormal
 
 
 @patch('simbak.fileutil.filter_paths')

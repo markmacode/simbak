@@ -1,7 +1,7 @@
 import os as _os
 import logging as _logging
 import logging.handlers as _handlers
-from simbak.backup.normal import BackupNormal as _BackupNormal
+from simbak.agent.normal import BackupNormal as _BackupNormal
 
 
 __version__ = '0.1.2'
@@ -33,7 +33,7 @@ _root_logger.addHandler(_rotating_file_handler)
 
 def backup(sources: list, destinations: list, name: str,
            compression_level: int = 6):
-    """A quick way to perform a standard backup.
+    """The easiest way to perform a standard backup.
 
     Args:
         Args:
@@ -44,6 +44,5 @@ def backup(sources: list, destinations: list, name: str,
             compression_level (int, optional): The gzip compression level that
                 you want to use for the backup. Defaults to 6.
     """
-    backup_agent = _BackupNormal(sources, destinations, name,
-                                 compression_level)
-    backup_agent.backup()
+    agent = _BackupNormal(sources, destinations, name, compression_level)
+    agent.backup()
