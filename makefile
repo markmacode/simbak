@@ -46,4 +46,4 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 simbak/
+	flake8 simbak/ tests/

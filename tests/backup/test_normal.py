@@ -1,5 +1,5 @@
 import os
-from unittest.mock import call, patch
+from unittest.mock import patch
 from simbak.backup.normal import BackupNormal
 
 
