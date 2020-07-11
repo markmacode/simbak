@@ -9,6 +9,7 @@ bump-major:
 
 release: build
 	twine upload dist/*
+	git push --tags
 
 build: clean
 	python setup.py sdist bdist_wheel
