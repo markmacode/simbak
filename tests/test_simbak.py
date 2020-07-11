@@ -3,7 +3,7 @@ from unittest.mock import patch
 from simbak import backup
 
 
-@patch('simbak.agent.normal.BackupNormal.backup')
+@patch('simbak.agent.normal.NormalAgent.backup')
 def test__backup(mock_agent_backup):
     sources = []
     destinations = []

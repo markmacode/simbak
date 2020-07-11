@@ -1,7 +1,7 @@
 import os as _os
 import logging as _logging
 import logging.handlers as _handlers
-from simbak.agent.normal import BackupNormal as _BackupNormal
+from simbak.agent.normal import NormalAgent as _NormalAgent
 
 
 __version__ = '0.1.2'
@@ -44,5 +44,5 @@ def backup(sources: list, destinations: list, name: str,
             compression_level (int, optional): The gzip compression level that
                 you want to use for the backup. Defaults to 6.
     """
-    agent = _BackupNormal(sources, destinations, name, compression_level)
+    agent = _NormalAgent(sources, destinations, name, compression_level)
     agent.backup()

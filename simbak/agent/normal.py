@@ -4,10 +4,10 @@ from simbak import fileutil as _fileutil
 _logger = _logging.getLogger(__name__)
 
 
-class BackupNormal():
+class NormalAgent():
     def __init__(self, sources: list, destinations: list, name: str,
                  compression_level: int = 6):
-        """Initialize of the BackupNormal object
+        """Initializer of the NormalAgent object
 
         Args:
             sources (list of str): Paths to the files that you are backing up.

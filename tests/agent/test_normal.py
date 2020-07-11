@@ -1,6 +1,6 @@
 import os
 from unittest.mock import patch
-from simbak.agent.normal import BackupNormal
+from simbak.agent.normal import NormalAgent
 
 
 @patch('simbak.fileutil.filter_paths')
@@ -35,7 +35,7 @@ def test__backup(mock_distribute_file, mock_create_targz,
         os.path.join('third', 'destination'),
     ]
     name = 'hello'
-    backup_agent = BackupNormal(sources, destinations, name)
+    backup_agent = NormalAgent(sources, destinations, name)
 
     backup_agent.backup()
 
