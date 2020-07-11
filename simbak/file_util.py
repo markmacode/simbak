@@ -1,8 +1,8 @@
 import logging as _logging
 import os as _os
+import shutil as _shutil
 import tarfile as _tarfile
 from datetime import datetime as _datetime
-import shutil as _shutil
 
 _logger = _logging.getLogger(__name__)
 
@@ -69,19 +69,22 @@ def distribute_file(path: str, destinations: list):
 
 
 def create_targz(sources: list, destination: str, file_name: str,
-                 compression_level: int) -> str:
-    """Creates a backup in a single destination.
+                 compression_level: int = 6) -> str:
+    """Creates a targz file in a single destination.
+
+    If you try to create a targz file for a file that already exists, it
+    will not overwrite that file.
 
     Args:
-        sources (list of str): The paths of the files you want to backup.
-        destination (str): The path of where you want the backup to be
-            stored.
-        file_name (str): The name that the backup file will be.
+        sources (list of str): The paths of the files you want to file.
+        destination (str): The path of where you want the file to be stored.
+        file_name (str): The name that the file will be.
         compression_level (int): The gzip compression level that you want
-            to use for the backup.
+            to use for the file.
 
     Returns:
-        str: Path of the backup that was created.
+        str: Path of the file that was created, if the file already existed,
+            it will return the already existing file path.
     """
     path = _os.path.join(destination, file_name)
 

@@ -1,19 +1,20 @@
 import os
-from unittest.mock import patch
-from unittest.mock import call
+from unittest.mock import Mock, call, patch
 
+import pytest
 from freezegun import freeze_time
 
 from simbak import file_util
 
 
 @patch('os.path.exists')
-def test__filter_paths__standard(mock_exists):
+def test__filter_paths__create_false(mock_exists):
     mock_exists.side_effect = [
         True,
         False,
         True,
     ]
+
     paths = [
         os.path.join('base', 'path', 'file.txt'),
         os.path.join('other', 'path', 'other.txt'),
@@ -38,6 +39,7 @@ def test__filter_paths__create_true(mock_makedirs, mock_exists):
         True,
     ]
     mock_makedirs.return_value = None
+
     paths = [
         os.path.join('base', 'path', 'file.txt'),
         os.path.join('other', 'path', 'other.txt'),
@@ -89,3 +91,90 @@ def test__distribute_file(mock_copyfile):
             os.path.join('distination', 'three', 'file.tar.gz'),
         ),
     ])
+
+
+@patch('tarfile.open')
+def test__create_targz__happy_path(mock_open):
+    mock_tar = Mock()
+    mock_open.return_value = mock_tar
+
+    sources = [
+        os.path.join('source', 'path', 'one.txt'),
+        os.path.join('other', 'path', 'two.txt'),
+        os.path.join('another', 'path', 'three'),
+    ]
+    destination = os.path.join('path', 'to', 'destination')
+    file_name = 'hello.tar.gz'
+
+    expected = os.path.join(destination, file_name)
+    actual = file_util.create_targz(sources, destination, file_name)
+
+    assert expected == actual
+    mock_tar.assert_has_calls([
+        call.add(
+            os.path.join('source', 'path', 'one.txt'),
+            'one.txt',
+        ),
+        call.add(
+            os.path.join('other', 'path', 'two.txt'),
+            'two.txt',
+        ),
+        call.add(
+            os.path.join('another', 'path', 'three'),
+            'three',
+        ),
+    ])
+
+
+@patch('tarfile.open')
+def test__create_targz__permission_error(mock_open):
+    mock_tar = Mock()
+    mock_tar.add.side_effect = [None, PermissionError(''), None]
+    mock_open.return_value = mock_tar
+
+    sources = [
+        os.path.join('source', 'path', 'one.txt'),
+        os.path.join('other', 'path', 'two.txt'),
+        os.path.join('another', 'path', 'three'),
+    ]
+    destination = os.path.join('path', 'to', 'destination')
+    file_name = 'hello.tar.gz'
+
+    expected = os.path.join(destination, file_name)
+    actual = file_util.create_targz(sources, destination, file_name)
+
+    assert expected == actual
+    mock_tar.assert_has_calls([
+        call.add(
+            os.path.join('source', 'path', 'one.txt'),
+            'one.txt',
+        ),
+        call.add(
+            os.path.join('other', 'path', 'two.txt'),
+            'two.txt',
+        ),
+        call.add(
+            os.path.join('another', 'path', 'three'),
+            'three',
+        ),
+    ])
+
+
+@patch('tarfile.open')
+def test__create_targz__file_exists_error(mock_open):
+    mock_tar = Mock()
+    mock_open.side_effect = FileExistsError('')
+
+    sources = [
+        os.path.join('source', 'path', 'one.txt'),
+        os.path.join('other', 'path', 'two.txt'),
+        os.path.join('another', 'path', 'three'),
+    ]
+    destination = os.path.join('path', 'to', 'destination')
+    file_name = 'hello.tar.gz'
+
+    expected = os.path.join(destination, file_name)
+    actual = file_util.create_targz(sources, destination, file_name)
+
+    assert expected == actual
+    mock_tar.add.assert_not_called()

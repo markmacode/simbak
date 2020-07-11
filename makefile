@@ -10,15 +10,19 @@ bump-major:
 release: build
 	twine upload dist/*
 
-build: clean
+build: clean lint test
 	python setup.py sdist bdist_wheel
 	twine check dist/*
 
 test: clean-test
 	tox
 
+test-fast: clean-test
+	python -m pytest
+
 coverage: clean-test
-	coverage run --source=simbak/
+	coverage run --source=simbak/ -m pytest
+	coverage report -m
 	coverage html htmlcov/
 
 clean: clean-pyc clean-build clean-test
@@ -42,4 +46,4 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	-flake8 simbak/
+	flake8 simbak/
