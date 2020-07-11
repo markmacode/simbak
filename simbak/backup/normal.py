@@ -1,5 +1,5 @@
 import logging as _logging
-from simbak import file_util as _file_util
+from simbak import fileutil as _fileutil
 
 _logger = _logging.getLogger(__name__)
 
@@ -31,19 +31,19 @@ class BackupNormal():
         the timestamp is YYYY-MM-DD--hh-mm-ss
         """
         _logger.info(f'Starting backup [{self._name}]')
-        filtered_sources = _file_util.filter_paths(self._sources)
-        filtered_destinations = _file_util.filter_paths(
+        filtered_sources = _fileutil.filter_paths(self._sources)
+        filtered_destinations = _fileutil.filter_paths(
             self._destinations, create=True)
-        file_name = _file_util.unique_file_name(self._name)
+        file_name = _fileutil.unique_file_name(self._name)
         _logger.info(f'Backup file name will be {self._name}')
 
-        first_path = _file_util.create_targz(
+        first_path = _fileutil.create_targz(
             sources=filtered_sources,
             destination=filtered_destinations[0],
             file_name=file_name,
             compression_level=self._compression_level
         )
-        _file_util.distribute_file(
+        _fileutil.distribute_file(
             path=first_path,
             destinations=filtered_destinations[1:]
         )

@@ -1,10 +1,9 @@
 import os
 from unittest.mock import Mock, call, patch
 
-import pytest
 from freezegun import freeze_time
 
-from simbak import file_util
+from simbak import fileutil
 
 
 @patch('os.path.exists')
@@ -25,7 +24,7 @@ def test__filter_paths__create_false(mock_exists):
         os.path.join('base', 'path', 'file.txt'),
         os.path.join('another', 'path', 'another.txt'),
     ]
-    actual = file_util.filter_paths(paths)
+    actual = fileutil.filter_paths(paths)
 
     assert expected == actual
 
@@ -51,7 +50,7 @@ def test__filter_paths__create_true(mock_makedirs, mock_exists):
         os.path.join('other', 'path', 'other.txt'),
         os.path.join('another', 'path', 'another.txt'),
     ]
-    actual = file_util.filter_paths(paths, True)
+    actual = fileutil.filter_paths(paths, True)
 
     assert expected == actual
 
@@ -61,7 +60,7 @@ def test__unique_file_name():
     name = 'hello'
 
     expected = 'hello--2020-01-01--01-01-01.tar.gz'
-    actual = file_util.unique_file_name(name)
+    actual = fileutil.unique_file_name(name)
 
     assert expected == actual
 
@@ -75,7 +74,7 @@ def test__distribute_file(mock_copyfile):
         os.path.join('distination', 'three'),
     ]
 
-    file_util.distribute_file(path, destinations)
+    fileutil.distribute_file(path, destinations)
 
     mock_copyfile.assert_has_calls([
         call(
@@ -107,7 +106,7 @@ def test__create_targz__happy_path(mock_open):
     file_name = 'hello.tar.gz'
 
     expected = os.path.join(destination, file_name)
-    actual = file_util.create_targz(sources, destination, file_name)
+    actual = fileutil.create_targz(sources, destination, file_name)
 
     assert expected == actual
     mock_tar.assert_has_calls([
@@ -141,7 +140,7 @@ def test__create_targz__permission_error(mock_open):
     file_name = 'hello.tar.gz'
 
     expected = os.path.join(destination, file_name)
-    actual = file_util.create_targz(sources, destination, file_name)
+    actual = fileutil.create_targz(sources, destination, file_name)
 
     assert expected == actual
     mock_tar.assert_has_calls([
@@ -174,7 +173,7 @@ def test__create_targz__file_exists_error(mock_open):
     file_name = 'hello.tar.gz'
 
     expected = os.path.join(destination, file_name)
-    actual = file_util.create_targz(sources, destination, file_name)
+    actual = fileutil.create_targz(sources, destination, file_name)
 
     assert expected == actual
     mock_tar.add.assert_not_called()
