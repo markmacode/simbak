@@ -1,9 +1,10 @@
 import argparse
+import sys
 
-from simbak import backup
+import simbak
 
 
-def parse_args():
+def parse_args(args):
     """Parses all the agruments sent through the command line.
 
     Returns:
@@ -40,13 +41,13 @@ def parse_args():
         help=('The compression level (1-9) of the gzip backup algorithm, '
               'default is 6.'),
     )
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def main():
     """Consider this the entry point to the command line utility."""
-    args = parse_args()
-    backup.backup(
+    args = parse_args(sys.argv[1:])
+    simbak.backup(
         sources=args.source,
         destinations=args.destination,
         name=args.name,
