@@ -4,7 +4,7 @@ import logging.handlers as _handlers
 from simbak.agent.normal import NormalAgent as _NormalAgent
 
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 # Setting up logger
 if _os.path.exists('logs/') is False:
