@@ -1,18 +1,31 @@
 bump:
-	bumpversion patch
+	bump2version patch
 
 bump-minor:
-	bumpversion minor
+	bump2version minor
 
 bump-major:
-	bumpversion major
+	bump2version major
 
-release: dist
+release: build
 	twine upload dist/*
+	git push --tags
 
 build: clean
 	python setup.py sdist bdist_wheel
 	twine check dist/*
+
+build-test: clean lint test build
+
+test: clean-test
+	tox
+
+test-fast: clean-test
+	python -m pytest
+
+coverage: clean-test
+	coverage run -m pytest
+	coverage report -m
 
 clean: clean-pyc clean-build clean-test
 
@@ -35,4 +48,4 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	pylint simbak --confidence=HIGH
+	flake8 simbak/ tests/
