@@ -10,9 +10,11 @@ bump-major:
 release: build
 	twine upload dist/*
 
-build: clean lint test
+build: clean
 	python setup.py sdist bdist_wheel
 	twine check dist/*
+
+build-test: clean lint test build
 
 test: clean-test
 	tox
