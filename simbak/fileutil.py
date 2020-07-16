@@ -11,7 +11,8 @@ def filter_paths(paths: list, create=False) -> list:
     """Gets only existing paths and cleans the paths to be OS compliant.
 
     Args:
-        paths (list of str): The list of paths that needs to be filtered.
+        paths (list of str): The list of paths that needs to be
+            filtered.
         create (bool, optional): Create a path if it doesn't exist.
             Defaults to False.
 
@@ -70,21 +71,22 @@ def distribute_file(path: str, destinations: list):
 
 def create_targz(sources: list, destination: str, file_name: str,
                  compression_level: int = 6) -> str:
-    """Creates a targz file in a single destination.
+    """Creates a tar.gz file in a single destination.
 
-    If you try to create a targz file for a file that already exists, it
-    will not overwrite that file.
+    If you try to create a tar.gz file for a file that already exists,
+    it will not overwrite that file.
 
     Args:
         sources (list of str): The paths of the files you want to file.
-        destination (str): The path of where you want the file to be stored.
+        destination (str): The path of where you want the file to be
+            stored.
         file_name (str): The name that the file will be.
-        compression_level (int): The gzip compression level that you want
-            to use for the file.
+        compression_level (int): The gzip compression level that you
+            want to use for the file.
 
     Returns:
-        str: Path of the file that was created, if the file already existed,
-            it will return the already existing file path.
+        str: Path of the file that was created, if the file already
+            existed, it will return the already existing file path.
     """
     path = _os.path.join(destination, file_name)
 

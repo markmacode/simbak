@@ -5,7 +5,7 @@ import simbak
 
 
 def parse_args(args):
-    """Parses all the agruments sent through the command line.
+    """Parses all the arguments sent through the command line.
 
     Returns:
         object: The parsed arguments.

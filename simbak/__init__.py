@@ -3,7 +3,6 @@ import logging as _logging
 import logging.handlers as _handlers
 from simbak.agent.normal import NormalAgent as _NormalAgent
 
-
 __version__ = '0.2.0'
 
 # Setting up logger
@@ -36,13 +35,13 @@ def backup(sources: list, destinations: list, name: str,
     """The easiest way to perform a standard backup.
 
     Args:
-        Args:
-            sources (list of str): Paths to the files that you are backing up.
-            destinations (list of str): Paths of where you want the backup to
-                be stored.
-            name (str): Name of the backup, this will name the backup files.
-            compression_level (int, optional): The gzip compression level that
-                you want to use for the backup. Defaults to 6.
+        sources (list of str): Paths to the files that you are backing
+            up.
+        destinations (list of str): Paths of where you want the backup
+            to be stored.
+        name (str): Name of the backup, this will name the backup files.
+        compression_level (int, optional): The gzip compression level
+            that you want to use for the backup. Defaults to 6.
     """
     agent = _NormalAgent(sources, destinations, name, compression_level)
     agent.backup()
