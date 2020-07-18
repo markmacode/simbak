@@ -1,9 +1,8 @@
+import logging as _logging
 import sys
 
 from simbak.cli import main
 from simbak.exception import BackupError
-import logging as _logging
-
 
 _logger = _logging.getLogger(__name__)
 

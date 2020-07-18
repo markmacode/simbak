@@ -1,9 +1,10 @@
 import os
 from unittest.mock import patch
-from simbak.agent import NormalAgent
-from simbak.exception import BackupError
+
 import pytest
 
+from simbak.agent import NormalAgent
+from simbak.exception import BackupError
 
 sources = [
     os.path.join('first', 'source', 'file.txt'),

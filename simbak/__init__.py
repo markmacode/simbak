@@ -1,6 +1,7 @@
-import os as _os
 import logging as _logging
 import logging.handlers as _handlers
+import os as _os
+
 from simbak.agent.normal import NormalAgent as _NormalAgent
 
 __version__ = '0.2.0'
