@@ -1,10 +1,12 @@
 import logging as _logging
 from simbak import fileutil as _fileutil
+from simbak.agent.base import BaseAgent as _BaseAgent
+from simbak.exception import BackupError as _BackupError
 
 _logger = _logging.getLogger(__name__)
 
 
-class NormalAgent():
+class NormalAgent(_BaseAgent):
     def __init__(self, sources: list, destinations: list, name: str,
                  compression_level: int = 6):
         """Initializer of the NormalAgent object
@@ -36,6 +38,12 @@ class NormalAgent():
         filtered_sources = _fileutil.filter_paths(self._sources)
         filtered_destinations = _fileutil.filter_paths(
             self._destinations, create=True)
+
+        if len(filtered_sources) == 0:
+            raise _BackupError('No sources for backup with NormalAgent')
+        if len(filtered_destinations) == 0:
+            raise _BackupError('No destinations for backup with NormalAgent')
+
         file_name = _fileutil.unique_file_name(self._name)
         _logger.info(f'Backup file name will be {self._name}')
 
