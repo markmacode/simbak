@@ -1,7 +1,7 @@
 from simbak.logging import logging
 from simbak.agent.normal import NormalAgent as _NormalAgent
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 _logger = logging.getLogger(__name__)
 
 
