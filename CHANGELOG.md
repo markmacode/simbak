@@ -1,7 +1,7 @@
 # v0.2.1
 - Improved logging messages slightly
 - Will now log messages to files to the following locations.
-    - Windows `%APPDATA%/simbak/`
+    - Windows `%APPDATA%\simbak\` or `C:\Program Data\simbak\`
     - Linux `/var/log/simbak/`
 
 # v0.2.0
