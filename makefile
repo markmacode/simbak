@@ -21,7 +21,7 @@ test: clean-test
 	tox
 
 test-fast: clean-test
-	python -m pytest
+	python -m pytest -v
 
 coverage: clean-test
 	coverage run -m pytest

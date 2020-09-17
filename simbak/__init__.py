@@ -6,22 +6,35 @@ from simbak.agent.normal import NormalAgent as _NormalAgent
 
 __version__ = '0.2.0'
 
-# Setting up logger
-if _os.path.exists('logs/') is False:
-    _os.mkdir('logs/')
+# Setting up logger files
+log_path = './simbak.log'
 
+# Windows
+if _os.name == 'nt':
+    appdata = _os.getenv('APPDATA')
+    log_path = _os.path.join(appdata, 'simbak')
+# Linux
+elif _os.name == 'posix':
+    log_path = _os.path.join('var', 'log', 'simbak')
+
+if _os.path.exists(log_path) is False:
+    _os.mkdir(log_path)
+
+# Setting up the format of the logs.
 _stream_formatter = _logging.Formatter('%(levelname)s: %(message)s')
 rotating_file_formatter = _logging.Formatter(
     fmt='%(asctime)s - %(levelname)s: %(message)s',
-    datefmt='%Y-%m-%d %H-%M-%S'
+    datefmt='%Y-%m-%d, %H-%M-%S'
 )
 
+# Stream handler for logging to the terminal.
 _stream_handler = _logging.StreamHandler()
 _stream_handler.setLevel(_logging.INFO)
 _stream_handler.setFormatter(_stream_formatter)
 
+# File handler for logging to a file.
 _rotating_file_handler = _handlers.RotatingFileHandler(
-    'logs/simbak.log', maxBytes=1000000, backupCount=20)
+    _os.path.join(log_path, 'simbak.log'), maxBytes=1000000, backupCount=20)
 _rotating_file_handler.setLevel(_logging.DEBUG)
 _rotating_file_handler.setFormatter(rotating_file_formatter)
 

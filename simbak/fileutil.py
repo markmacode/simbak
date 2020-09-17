@@ -110,3 +110,25 @@ def create_targz(sources: list, destination: str, file_name: str,
                       'exists')
 
     return path
+
+
+def dir_size(base_path: str = '.') -> int:
+    """Gets the total size of a directory, in bytes.
+
+    Args:
+        base_path (str, optional): Path to the dir to get the size of.
+
+    Returns:
+        int: Size of the directory, in bytes.
+    """
+    size = 0
+
+    for dir_path, dir_names, file_names in _os.walk(base_path):
+        for file_name in file_names:
+            file_path = _os.path.join(dir_path, file_name)
+
+            # Skip if it is symbolic link.
+            if not _os.path.islink(file_path):
+                size += _os.path.getsize(file_path)
+
+    return size
