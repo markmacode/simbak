@@ -1,5 +1,7 @@
 import os
-from unittest.mock import Mock, call, patch
+from unittest.mock import Mock
+from unittest.mock import call
+from unittest.mock import patch
 
 from freezegun import freeze_time
 
