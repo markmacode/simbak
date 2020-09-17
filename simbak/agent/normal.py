@@ -1,5 +1,5 @@
 import logging as _logging
-from typing import Tuple
+from typing import Tuple as _Tuple
 
 from simbak import fileutil as _fileutil
 from simbak.agent.base import BaseAgent as _BaseAgent
@@ -45,7 +45,7 @@ class NormalAgent(_BaseAgent):
             destinations=destinations[1:]
         )
 
-    def _filter_paths(self, create: bool = True) -> Tuple:
+    def _filter_paths(self, create: bool = True) -> _Tuple:
         sources = _fileutil.filter_paths(self._sources)
         destinations = _fileutil.filter_paths(
             self._destinations, create=create)

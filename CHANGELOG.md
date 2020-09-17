@@ -1,3 +1,9 @@
+# v0.2.1
+- Improved logging messages slightly
+- Will now log messages to files to the following locations.
+    - Windows `%APPDATA%/simbak/`
+    - Linux `/var/log/simbak/`
+
 # v0.2.0
 - Removed `simbak/backup.py` module
     - It contained only one public method `simbak.backup.backup()`, and

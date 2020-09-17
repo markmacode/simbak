@@ -18,13 +18,10 @@ build: clean
 build-test: clean lint test build
 
 test: clean-test
-	tox
-
-test-fast: clean-test
-	python -m pytest -v
+	python -m pytest -v tests/
 
 coverage: clean-test
-	coverage run -m pytest
+	coverage run -m pytest tests/
 	coverage report -m
 
 clean: clean-pyc clean-build clean-test
@@ -43,7 +40,6 @@ clean-build:
 	find . -name '*.egg' -exec rm -f {} +
 
 clean-test:
-	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
 
