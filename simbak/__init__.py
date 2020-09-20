@@ -1,8 +1,8 @@
-from simbak.logging import logging
+from simbak.logging import set_root_logger
 from simbak.agent.normal import NormalAgent as _NormalAgent
 
 __version__ = '0.2.1'
-_logger = logging.getLogger(__name__)
+set_root_logger()
 
 
 def backup(sources: list, destinations: list, name: str,

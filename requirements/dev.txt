@@ -2,3 +2,4 @@ autopep8==1.5.3
 bump2version==1.0.0
 flake8==3.8.3
 wheel==0.35.1
+python-dotenv==0.14.0
