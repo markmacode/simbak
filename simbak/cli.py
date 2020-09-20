@@ -12,7 +12,7 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(
         prog='simbak',
-        description='Simple backup solution.',
+        description=f'Simple backup solution (v{simbak.__version__}).',
     )
     parser.add_argument(
         '-s', '--source',
