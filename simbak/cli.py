@@ -51,5 +51,4 @@ def main():
         sources=args.source,
         destinations=args.destination,
         name=args.name,
-        compression_level=args.compression_level
-    )
+        compression_level=args.compression_level)

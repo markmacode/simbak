@@ -27,8 +27,9 @@ def filter_paths(paths: list, create=False) -> list:
         if _os.path.exists(normpath):
             filtered_paths.append(normpath)
         elif create:
-            _logger.info(f'{normpath} doesn\'t exist, creating directory '
-                         'with that path.')
+            _logger.info(
+                f'{normpath} doesn\'t exist, creating directory '
+                'with that path.')
             _os.makedirs(normpath)
             filtered_paths.append(normpath)
         else:
@@ -91,8 +92,8 @@ def create_targz(sources: list, destination: str, file_name: str,
     path = _os.path.join(destination, file_name)
 
     try:
-        tar = _tarfile.open(path, 'x:gz',
-                            compresslevel=compression_level)
+        tar = _tarfile.open(
+            path, 'x:gz', compresslevel=compression_level)
 
         for source in sources:
             basename = _os.path.basename(source)
@@ -100,14 +101,14 @@ def create_targz(sources: list, destination: str, file_name: str,
             try:
                 tar.add(source, basename)
             except PermissionError:
-                _logger.error(f'Couldn\'t compress {source}, pemission '
-                              'denied.')
+                _logger.error(
+                    f'Couldn\'t compress {source}, pemission denied.')
 
         tar.close()
         _logger.info(f'Saved backup {file_name} to {destination}')
     except FileExistsError:
-        _logger.error(f'Failed to create backup {file_name}, file already '
-                      'exists')
+        _logger.error(
+            f'Failed to create backup {file_name}, file already exists')
 
     return path
 

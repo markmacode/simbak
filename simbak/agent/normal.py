@@ -21,8 +21,8 @@ class NormalAgent(_BaseAgent):
         """
         # Cleans the path names, and removes non-existent paths, if relevant.
         _logger.info(f'Starting backup [{self._name}]')
-        sources, destinations = super()._filter_paths(self._sources,
-                                                      self._destinations)
+        sources, destinations = super()._filter_paths(
+            self._sources, self._destinations)
 
         # A unique file name is important for certain backup agents.
         file_name = _fileutil.unique_file_name(self._name)
@@ -33,13 +33,11 @@ class NormalAgent(_BaseAgent):
             sources=sources,
             destination=destinations[0],
             file_name=file_name,
-            compression_level=self._compression_level
-        )
+            compression_level=self._compression_level)
 
         super()._log_source_sizes(sources)
         super()._log_backup_size(first_path)
 
         _fileutil.distribute_file(
             path=first_path,
-            destinations=destinations[1:]
-        )
+            destinations=destinations[1:])

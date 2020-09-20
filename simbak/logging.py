@@ -22,13 +22,11 @@ def _stream_handler():
 def _rotating_file_handler():
     formatter = logging.Formatter(
         fmt='%(asctime)s - %(levelname)s: %(message)s',
-        datefmt='%Y-%m-%d, %H-%M-%S'
-    )
+        datefmt='%Y-%m-%d, %H-%M-%S')
     handler = _handlers.RotatingFileHandler(
         _os.path.join(log_path, 'simbak.log'),
         maxBytes=1000000,
-        backupCount=20
-    )
+        backupCount=20)
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(formatter)
     return handler

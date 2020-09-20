@@ -34,9 +34,9 @@ name = 'hello'
 @patch('simbak.fileutil.unique_file_name')
 @patch('simbak.fileutil.create_targz')
 @patch('simbak.fileutil.distribute_file')
-def test__backup(mock_distribute_file, mock_create_targz,
-                 mock_unique_file_name, mock_filter_paths, mock_dir_size,
-                 mock_getsize):
+def test__backup(
+        mock_distribute_file, mock_create_targz, mock_unique_file_name,
+        mock_filter_paths, mock_dir_size, mock_getsize):
     mock_filter_paths.side_effect = [filtered_sources, filtered_destinations]
     mock_unique_file_name.return_value = 'hello--1.tar.gz'
     mock_create_targz.return_value = \
