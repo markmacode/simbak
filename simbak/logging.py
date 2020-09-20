@@ -2,6 +2,38 @@ import logging
 import logging.handlers as _handlers
 import os as _os
 
+
+def _set_root_logger():
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)
+    root_logger.addHandler(_stream_handler())
+    root_logger.addHandler(_rotating_file_handler())
+    return root_logger
+
+
+def _stream_handler():
+    formatter = logging.Formatter('%(levelname)s: %(message)s')
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    handler.setFormatter(formatter)
+    return handler
+
+
+def _rotating_file_handler():
+    formatter = logging.Formatter(
+        fmt='%(asctime)s - %(levelname)s: %(message)s',
+        datefmt='%Y-%m-%d, %H-%M-%S'
+    )
+    handler = _handlers.RotatingFileHandler(
+        _os.path.join(log_path, 'simbak.log'),
+        maxBytes=1000000,
+        backupCount=20
+    )
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(formatter)
+    return handler
+
+
 # Setting up logger files
 log_path = './simbak.log'
 
@@ -16,25 +48,4 @@ elif _os.name == 'posix':
 if _os.path.exists(log_path) is False:
     _os.mkdir(log_path)
 
-# Setting up the format of the logs.
-_stream_formatter = logging.Formatter('%(levelname)s: %(message)s')
-rotating_file_formatter = logging.Formatter(
-    fmt='%(asctime)s - %(levelname)s: %(message)s',
-    datefmt='%Y-%m-%d, %H-%M-%S'
-)
-
-# Stream handler for logging to the terminal.
-_stream_handler = logging.StreamHandler()
-_stream_handler.setLevel(logging.INFO)
-_stream_handler.setFormatter(_stream_formatter)
-
-# File handler for logging to a file.
-_rotating_file_handler = _handlers.RotatingFileHandler(
-    _os.path.join(log_path, 'simbak.log'), maxBytes=1000000, backupCount=20)
-_rotating_file_handler.setLevel(logging.DEBUG)
-_rotating_file_handler.setFormatter(rotating_file_formatter)
-
-_root_logger = logging.getLogger()
-_root_logger.setLevel(logging.DEBUG)
-_root_logger.addHandler(_stream_handler)
-_root_logger.addHandler(_rotating_file_handler)
+_set_root_logger()

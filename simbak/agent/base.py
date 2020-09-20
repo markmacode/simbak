@@ -1,7 +1,9 @@
 import abc as _abc
 import logging as _logging
 import os as _os
+from typing import Tuple as _Tuple
 
+from simbak import fileutil as _fileutil
 from simbak.exception import BackupError as _BackupError
 from simbak.fileutil import dir_size as _dir_size
 
@@ -27,6 +29,14 @@ class BaseAgent(_abc.ABC):
         self._destinations = destinations
         self._name = name
         self._compression_level = compression_level
+
+    @staticmethod
+    def _filter_paths(sources: list, destinations: list,
+                      create: bool = True) -> _Tuple:
+        sources = _fileutil.filter_paths(sources)
+        destinations = _fileutil.filter_paths(destinations, create=create)
+        BaseAgent._validate_paths(sources, destinations)
+        return sources, destinations
 
     @staticmethod
     def _log_source_sizes(sources: list):
