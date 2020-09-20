@@ -53,6 +53,12 @@ class RotatingAgent(_BaseAgent):
                 _logger.info(
                     f'Rotate limit has been exceeded for [{self._name}] in '
                     f'{destination}')
-                oldest_file = _fileutil.oldest_file(valid_files)
-                _logger.info(f'Removing oldest backup {oldest_file}')
-                _os.remove(oldest_file)
+                oldest_file_name = _fileutil.oldest_file(valid_files)
+                oldest_file_path = _os.path.join(destination, oldest_file_name)
+                _logger.info(f'Removing oldest backup {oldest_file_path}')
+                try:
+                    _os.remove(oldest_file_path)
+                except PermissionError:
+                    _logger.error(
+                        f'Couldn\'t remove {oldest_file_path}, permission '
+                        f'denied')
