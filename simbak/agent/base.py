@@ -1,5 +1,6 @@
 import abc as _abc
 import logging as _logging
+import os as _os
 
 from simbak import fileutil as _fileutil
 from simbak.exception import BackupError as _BackupError
@@ -49,3 +50,24 @@ class BaseAgent(_abc.ABC):
             total_size += dir_size
 
         return total_size
+
+    def _backup(self):
+        _logger.info(
+            f'{self._sources_size()} bytes for [{self._name}] sources')
+
+        # A unique file name is important for certain backup agents.
+        file_name = _fileutil.unique_file_name(self._name)
+        _logger.info(f'Backup file name will be {file_name}')
+
+        # Using tar gzip for the backup. Tarring once, distributing later.
+        first_path = _fileutil.create_targz(
+            sources=self._sources,
+            destination=self._destinations[0],
+            file_name=file_name,
+            compression_level=self._compression_level)
+        backup_size = _os.path.getsize(first_path)
+        _logger.info(f'{backup_size} bytes for [{self._name}] backup file')
+
+        _fileutil.distribute_file(
+            path=first_path,
+            destinations=self._destinations[1:])

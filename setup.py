@@ -11,7 +11,7 @@ setuptools.setup(
     description='A simple backup solution that\'s light and portable',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     packages=setuptools.find_packages(),
     url='https://github.com/mark-bromell/simbak',
     project_urls={
@@ -27,7 +27,4 @@ setuptools.setup(
             'simbak = simbak.__main__:main',
         ],
     },
-    install_requires=[
-        'deprecation',
-    ],
 )

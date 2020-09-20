@@ -3,6 +3,7 @@ import os as _os
 import shutil as _shutil
 import tarfile as _tarfile
 from datetime import datetime as _datetime
+from typing import Optional as _Optional
 
 _logger = _logging.getLogger(__name__)
 
@@ -133,3 +134,37 @@ def dir_size(base_path: str = '.') -> int:
                 size += _os.path.getsize(file_path)
 
     return size
+
+
+def oldest_file(file_names: list) -> _Optional[str]:
+    """Gets the oldest file from a list of backup file names.
+
+    Args:
+        file_names (list[str]): List of backup file names.
+
+    Returns:
+        str, optional: Oldest file name.
+    """
+    if len(file_names) == 0:
+        return None
+
+    oldest = file_names[0]
+    oldest_time = _time_from_file_name(file_names[0])
+
+    for file_name in file_names:
+        time = _time_from_file_name(file_name)
+
+        if time < oldest_time:
+            oldest = file_name
+            oldest_time = time
+
+    return oldest
+
+
+def _time_from_file_name(file_name: str):
+    # Remove the .tar.gz from file name
+    file_name = file_name[:-7]
+
+    parts = file_name.split('--')
+    time_str = f'{parts[1]} {parts[2]}'
+    return _datetime.strptime(time_str, '%Y-%m-%d %H-%M-%S')
