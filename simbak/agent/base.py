@@ -1,7 +1,5 @@
 import abc as _abc
 import logging as _logging
-import os as _os
-from typing import Tuple as _Tuple
 
 from simbak import fileutil as _fileutil
 from simbak.exception import BackupError as _BackupError
@@ -30,28 +28,24 @@ class BaseAgent(_abc.ABC):
         self._name = name
         self._compression_level = compression_level
 
-    @staticmethod
-    def _filter_paths(sources: list, destinations: list,
-                      create: bool = True) -> _Tuple:
-        sources = _fileutil.filter_paths(sources)
-        destinations = _fileutil.filter_paths(destinations, create=create)
-        BaseAgent._validate_paths(sources, destinations)
-        return sources, destinations
+        self.__filter_paths()
 
-    @staticmethod
-    def _log_source_sizes(sources: list):
-        for source in sources:
-            size = _dir_size(source)
-            _logger.info(f'{size} bytes :: SOURCE :: {source}')
+    def __filter_paths(self, create: bool = True):
+        self._sources = _fileutil.filter_paths(self._sources)
+        self._destinations = _fileutil.filter_paths(
+            self._destinations, create=create)
+        self._validate_paths()
 
-    @staticmethod
-    def _log_backup_size(backup_path: str):
-        size = _os.path.getsize(backup_path)
-        _logger.info(f'{size} bytes :: BACKUP :: {backup_path}')
-
-    @staticmethod
-    def _validate_paths(sources: list, destinations: list):
-        if len(sources) == 0:
+    def _validate_paths(self):
+        if len(self._sources) == 0:
             raise _BackupError('No sources for backup')
-        if len(destinations) == 0:
+        if len(self._destinations) == 0:
             raise _BackupError('No destinations for backup')
+
+    def _sources_size(self):
+        total_size = 0
+        for source in self._sources:
+            dir_size = _dir_size(source)
+            total_size += dir_size
+
+        return total_size

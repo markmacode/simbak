@@ -1,4 +1,5 @@
 import logging as _logging
+import os as _os
 
 from simbak import fileutil as _fileutil
 from simbak.agent.base import BaseAgent as _BaseAgent
@@ -21,8 +22,7 @@ class NormalAgent(_BaseAgent):
         """
         # Cleans the path names, and removes non-existent paths, if relevant.
         _logger.info(f'Starting backup [{self._name}]')
-        sources, destinations = super()._filter_paths(
-            self._sources, self._destinations)
+        _logger.info(f'{self._sources_size()} bytes for {self._name} sources')
 
         # A unique file name is important for certain backup agents.
         file_name = _fileutil.unique_file_name(self._name)
@@ -30,14 +30,13 @@ class NormalAgent(_BaseAgent):
 
         # Using tar gzip for the backup. Tarring once, distributing later.
         first_path = _fileutil.create_targz(
-            sources=sources,
-            destination=destinations[0],
+            sources=self._sources,
+            destination=self._destinations[0],
             file_name=file_name,
             compression_level=self._compression_level)
-
-        super()._log_source_sizes(sources)
-        super()._log_backup_size(first_path)
+        backup_size = _os.path.getsize(first_path)
+        _logger.info(f'{backup_size} bytes for {self._name} backup file')
 
         _fileutil.distribute_file(
             path=first_path,
-            destinations=destinations[1:])
+            destinations=self._destinations[1:])
