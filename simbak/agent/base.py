@@ -12,7 +12,7 @@ _logger = _logging.getLogger(__name__)
 class BaseAgent(_abc.ABC):
     def __init__(self, sources: list, destinations: list, name: str,
                  compression_level: int):
-        """Initializer of the NormalAgent object
+        """Default initializer for all agent objects.
 
         Args:
             sources (list of str): Paths to the files that you are
@@ -22,7 +22,7 @@ class BaseAgent(_abc.ABC):
             name (str): Name of the backup, this will name the backup
                 files.
             compression_level (int, optional): The gzip compression
-                level that you want to use for the backup. Defaults to 6.
+                level that you want to use for the backup.
         """
         self._sources = sources
         self._destinations = destinations
@@ -30,6 +30,10 @@ class BaseAgent(_abc.ABC):
         self._compression_level = compression_level
 
         self.__filter_paths()
+
+    @_abc.abstractmethod
+    def backup(self):
+        pass
 
     def __filter_paths(self, create: bool = True):
         self._sources = _fileutil.filter_paths(self._sources)

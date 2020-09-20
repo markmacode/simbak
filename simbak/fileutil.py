@@ -140,7 +140,7 @@ def oldest_file(file_names: list) -> _Optional[str]:
     """Gets the oldest file from a list of backup file names.
 
     Args:
-        file_names (list[str]): List of backup file names.
+        file_names (list of str): List of backup file names.
 
     Returns:
         str, optional: Oldest file name.

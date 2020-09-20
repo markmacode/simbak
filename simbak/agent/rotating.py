@@ -10,6 +10,19 @@ _logger = _logging.getLogger(__name__)
 class RotatingAgent(_BaseAgent):
     def __init__(self, sources: list, destinations: list, name: str,
                  rotate_limit: int, compression_level: int = 6):
+        """
+        Args:
+            sources (list of str): Paths to the files that you are
+                backing up.
+            destinations (list of str): Paths of where you want the
+                backup to be stored.
+            name (str): Name of the backup, this will name the backup
+                files.
+            rotate_limit (int): The maximum amount of backups to keep in
+                a destination.
+            compression_level (int, optional): The gzip compression
+                level that you want to use for the backup. Default to 6.
+        """
         super().__init__(sources, destinations, name, compression_level)
         self._rotate_limit = rotate_limit
 
