@@ -1,3 +1,6 @@
+# v0.3.1
+- Hotfix, added dependent package (`python-dotenv`) to the installation.
+
 # v0.3.0
 - Improved logging once again.
 - Added a Rotating Agent. This agent will do rotating backups up to a
