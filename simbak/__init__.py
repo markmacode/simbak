@@ -1,8 +1,11 @@
-from simbak.logging import logging
-from simbak.agent.normal import NormalAgent as _NormalAgent
+from dotenv import load_dotenv as _load_dotenv
 
-__version__ = '0.2.1'
-_logger = logging.getLogger(__name__)
+__version__ = '0.3.0'
+
+
+def main():
+    from simbak.logging import set_root_logger
+    set_root_logger()
 
 
 def backup(sources: list, destinations: list, name: str,
@@ -18,5 +21,10 @@ def backup(sources: list, destinations: list, name: str,
         compression_level (int, optional): The gzip compression level
             that you want to use for the backup. Defaults to 6.
     """
-    agent = _NormalAgent(sources, destinations, name, compression_level)
+    from simbak.agent.normal import NormalAgent
+    agent = NormalAgent(sources, destinations, name, compression_level)
     agent.backup()
+
+
+_load_dotenv()
+main()

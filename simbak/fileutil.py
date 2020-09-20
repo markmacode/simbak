@@ -3,6 +3,7 @@ import os as _os
 import shutil as _shutil
 import tarfile as _tarfile
 from datetime import datetime as _datetime
+from typing import Optional as _Optional
 
 _logger = _logging.getLogger(__name__)
 
@@ -27,8 +28,9 @@ def filter_paths(paths: list, create=False) -> list:
         if _os.path.exists(normpath):
             filtered_paths.append(normpath)
         elif create:
-            _logger.info(f'{normpath} doesn\'t exist, creating directory '
-                         'with that path.')
+            _logger.info(
+                f'{normpath} doesn\'t exist, creating directory '
+                'with that path.')
             _os.makedirs(normpath)
             filtered_paths.append(normpath)
         else:
@@ -91,8 +93,8 @@ def create_targz(sources: list, destination: str, file_name: str,
     path = _os.path.join(destination, file_name)
 
     try:
-        tar = _tarfile.open(path, 'x:gz',
-                            compresslevel=compression_level)
+        tar = _tarfile.open(
+            path, 'x:gz', compresslevel=compression_level)
 
         for source in sources:
             basename = _os.path.basename(source)
@@ -100,14 +102,14 @@ def create_targz(sources: list, destination: str, file_name: str,
             try:
                 tar.add(source, basename)
             except PermissionError:
-                _logger.error(f'Couldn\'t compress {source}, pemission '
-                              'denied.')
+                _logger.error(
+                    f'Couldn\'t compress {source}, pemission denied.')
 
         tar.close()
         _logger.info(f'Saved backup {file_name} to {destination}')
     except FileExistsError:
-        _logger.error(f'Failed to create backup {file_name}, file already '
-                      'exists')
+        _logger.error(
+            f'Failed to create backup {file_name}, file already exists')
 
     return path
 
@@ -132,3 +134,37 @@ def dir_size(base_path: str = '.') -> int:
                 size += _os.path.getsize(file_path)
 
     return size
+
+
+def oldest_file(file_names: list) -> _Optional[str]:
+    """Gets the oldest file from a list of backup file names.
+
+    Args:
+        file_names (list of str): List of backup file names.
+
+    Returns:
+        str, optional: Oldest file name.
+    """
+    if len(file_names) == 0:
+        return None
+
+    oldest = file_names[0]
+    oldest_time = _time_from_file_name(file_names[0])
+
+    for file_name in file_names:
+        time = _time_from_file_name(file_name)
+
+        if time < oldest_time:
+            oldest = file_name
+            oldest_time = time
+
+    return oldest
+
+
+def _time_from_file_name(file_name: str):
+    # Remove the .tar.gz from file name
+    file_name = file_name[:-7]
+
+    parts = file_name.split('--')
+    time_str = f'{parts[1]} {parts[2]}'
+    return _datetime.strptime(time_str, '%Y-%m-%d %H-%M-%S')

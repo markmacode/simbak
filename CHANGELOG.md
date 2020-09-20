@@ -1,11 +1,18 @@
+# v0.3.0
+- Improved logging once again.
+- Added a Rotating Agent. This agent will do rotating backups up to a
+"rotate limit" once the rotate limit is exceeded, it will remove the
+oldest backup of that specified rotating backup spec.
+- Plenty of housekeeping and bug fixes.
+
 # v0.2.1
-- Improved logging messages slightly
+- Improved logging messages slightly.
 - Will now log messages to files to the following locations.
     - Windows `%APPDATA%\simbak\` or `C:\Program Data\simbak\`
     - Linux `/var/log/simbak/`
 
 # v0.2.0
-- Removed `simbak/backup.py` module
+- Removed `simbak/backup.py` module.
     - It contained only one public method `simbak.backup.backup()`, and
     wasn’t able to scale well.
     - Moved the one public method to `simbak/__init__.py` so that the

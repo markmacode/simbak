@@ -95,7 +95,7 @@ def test__distribute_file(mock_copyfile):
 
 
 @patch('tarfile.open')
-def test__create_targz__happy_path(mock_open):
+def test__create_targz(mock_open):
     mock_tar = Mock()
     mock_open.return_value = mock_tar
 
@@ -179,3 +179,26 @@ def test__create_targz__file_exists_error(mock_open):
 
     assert expected == actual
     mock_tar.add.assert_not_called()
+
+
+def test__oldest_file():
+    file_names = [
+        'backup--2020-11-05--00-00-01.tar.gz',
+        'backup--2020-01-01--00-00-00.tar.gz',
+        'backup--2020-07-12--00-00-02.tar.gz',
+        'backup--2020-05-26--00-00-00.tar.gz',
+    ]
+
+    expected = file_names[1]
+    actual = fileutil.oldest_file(file_names)
+
+    assert expected == actual
+
+
+def test__oldest_file__empty_list():
+    file_names = []
+
+    expected = None
+    actual = fileutil.oldest_file(file_names)
+
+    assert expected == actual

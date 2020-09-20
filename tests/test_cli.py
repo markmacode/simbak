@@ -50,5 +50,4 @@ def test__main(mock_backup, mock_parse_args):
         sources=args.source,
         destinations=args.destination,
         name=args.name,
-        compression_level=args.compression_level
-    )
+        compression_level=args.compression_level)
