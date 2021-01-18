@@ -6,7 +6,7 @@ For a detailed outline of simbak, visit the
 Simbak is a simple backup solution that is aimed towards individuals who
 just want a quick and easy way to backup their files. Backups are stored
 as `tar.gz` files, so there is no dependence on any application to
-restore you backups.
+restore your backups.
 
 # Benefits of simbak
 
