@@ -20,7 +20,7 @@ simbak to meet their own needs.
 # Getting started
 
 ## Installation
-To install simbak you can simple use
+To install simbak you can simply use
 [pip](https://pypi.org/project/pip/).
 
 ```bash
