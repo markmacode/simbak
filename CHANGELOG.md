@@ -1,3 +1,6 @@
+# v0.4.1
+- Fixed the neglected --log option for the CLI.
+
 # v0.4.0
 - The log file path can now be specified.
 - File logging is no longer done by default, it is optional.

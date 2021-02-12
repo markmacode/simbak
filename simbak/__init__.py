@@ -1,7 +1,7 @@
 from dotenv import load_dotenv as _load_dotenv
 from simbak.logging import set_logger as _set_logger
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 _load_dotenv()
 _set_logger()
