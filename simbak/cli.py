@@ -41,6 +41,13 @@ def parse_args(args):
         help=('The compression level (1-9) of the gzip backup algorithm, '
               'default is 6.'),
     )
+    parser.add_argument(
+        '-l', '--log',
+        type=str,
+        help=('The compression level (1-9) of the gzip backup algorithm, '
+              'default is 6.'),
+        required=False,
+    )
     return parser.parse_args(args)
 
 
