@@ -1,9 +1,0 @@
-[coverage:run]
-source = simbak/
-omit = simbak/__main__.py
-
-[coverage:report]
-ignore_errors = True
-
-[coverage:html]
-directory = htmlcov/
