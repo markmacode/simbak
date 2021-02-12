@@ -1,15 +1,14 @@
 from dotenv import load_dotenv as _load_dotenv
+from simbak.logging import set_logger as _set_logger
 
 __version__ = '0.3.1'
 
-
-def main():
-    from simbak.logging import set_root_logger
-    set_root_logger()
+_load_dotenv()
+_set_logger()
 
 
 def backup(sources: list, destinations: list, name: str,
-           compression_level: int = 6):
+           compression_level: int = 6, log_path: str = None):
     """The easiest way to perform a standard backup.
 
     Args:
@@ -20,11 +19,13 @@ def backup(sources: list, destinations: list, name: str,
         name (str): Name of the backup, this will name the backup files.
         compression_level (int, optional): The gzip compression level
             that you want to use for the backup. Defaults to 6.
+        log_path (str, optional): The file location to store the logs.
     """
     from simbak.agent.normal import NormalAgent
+    from simbak.logging import set_file_logger
+
+    if log_path is not None:
+        set_file_logger(log_path)
+
     agent = NormalAgent(sources, destinations, name, compression_level)
     agent.backup()
-
-
-_load_dotenv()
-main()

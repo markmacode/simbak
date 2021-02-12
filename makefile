@@ -1,10 +1,10 @@
-bump:
+bump: lint test
 	bump2version patch
 
-bump-minor:
+bump-minor: lint test
 	bump2version minor
 
-bump-major:
+bump-major: lint test
 	bump2version major
 
 release: build
@@ -23,6 +23,7 @@ test: clean-test
 coverage: clean-test
 	coverage run -m pytest tests/
 	coverage report -m
+	coverage html
 
 clean: clean-pyc clean-build clean-test
 

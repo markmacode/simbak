@@ -5,33 +5,23 @@ import os as _os
 from simbak import config as _config
 
 
-def set_root_logger():
+def set_logger():
     stream_handler = _stream_handler()
-    rotating_file_handler = _rotating_file_handler(get_log_path())
-
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
     root_logger.addHandler(stream_handler)
-    root_logger.addHandler(rotating_file_handler)
     return root_logger
 
 
-def get_log_path() -> str:
-    log_path = './logs'
+def set_file_logger(log_path: str):
+    root_logger = logging.getLogger()
 
-    if _config.SIMBAK_ENV != 'debug':
-        # Windows
-        if _os.name == 'nt':
-            appdata = _os.getenv('APPDATA', default='C:\\Program Data')
-            log_path = _os.path.join(appdata, 'simbak')
-        # Linux
-        elif _os.name == 'posix':
-            log_path = _os.path.join('var', 'log', 'simbak')
+    if log_path is not None:
+        _set_log_path(log_path)
+        rotating_file_handler = _rotating_file_handler(log_path)
+        root_logger.addHandler(rotating_file_handler)
 
-    if _os.path.exists(log_path) is False:
-        _os.mkdir(log_path)
-
-    return log_path
+    return root_logger
 
 
 def _stream_handler():
@@ -45,6 +35,12 @@ def _stream_handler():
 
     handler.setFormatter(formatter)
     return handler
+
+
+def _set_log_path(log_path: str) -> str:
+    if _os.path.exists(log_path) is False:
+        _os.mkdir(log_path)
+    return log_path
 
 
 def _rotating_file_handler(log_path: str):
