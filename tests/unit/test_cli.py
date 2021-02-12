@@ -40,7 +40,8 @@ def test__main(mock_backup, mock_parse_args):
         'source': ['source/1', 'source/2'],
         'destination': ['destination/1', 'destination/2'],
         'name': 'hello',
-        'compression_level': 6
+        'compression_level': 6,
+        'log': None
     })()
     mock_parse_args.return_value = args
 
@@ -50,4 +51,5 @@ def test__main(mock_backup, mock_parse_args):
         sources=args.source,
         destinations=args.destination,
         name=args.name,
-        compression_level=args.compression_level)
+        compression_level=args.compression_level,
+        log_path=args.log)

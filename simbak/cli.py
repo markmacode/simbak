@@ -44,8 +44,7 @@ def parse_args(args):
     parser.add_argument(
         '-l', '--log',
         type=str,
-        help=('The compression level (1-9) of the gzip backup algorithm, '
-              'default is 6.'),
+        help='The path for the simbak log file',
         required=False,
     )
     return parser.parse_args(args)
@@ -58,4 +57,5 @@ def main():
         sources=args.source,
         destinations=args.destination,
         name=args.name,
-        compression_level=args.compression_level)
+        compression_level=args.compression_level,
+        log_path=args.log)
