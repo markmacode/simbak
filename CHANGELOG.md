@@ -1,3 +1,7 @@
+# v0.4.0
+- The log file path can now be specified.
+- File logging is no longer done by default, it is optional.
+
 # v0.3.1
 - Hotfix, added dependent package (`python-dotenv`) to the installation.
 
