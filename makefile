@@ -23,6 +23,7 @@ test: clean-test
 coverage: clean-test
 	coverage run -m pytest tests/
 	coverage report -m
+	coverage html
 
 clean: clean-pyc clean-build clean-test
 
