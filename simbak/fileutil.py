@@ -101,9 +101,10 @@ def create_targz(sources: list, destination: str, file_name: str,
             _logger.info(f'Compressing {source}')
             try:
                 tar.add(source, basename)
-            except PermissionError:
+            except PermissionError as e:
                 _logger.error(
-                    f'Couldn\'t compress {source}, pemission denied.')
+                    f'Couldn\'t fully compress {source}, pemission denied for '
+                    f'{e.filename}.')
 
         tar.close()
         _logger.info(f'Saved backup {file_name} to {destination}')
