@@ -29,6 +29,14 @@ $ pip install simbak
 
 ## Using simbak
 
+### Important things to know
+
+In order to avoid any issues with backing up, you should manually
+create your destination paths. This will ensure the confidence in the
+backup working. The same goes for the logging path, if you want to save
+the logs to a file, make sure the directory where the log file will be
+stored in is already created.
+
 ### Terminal
 
 You can use simbak in many ways, the fastest way would be to use the
@@ -54,6 +62,22 @@ scripts to use simbak (a python script can be prettier than shell script).
 import simbak
 
 # This will perform a normal backup.
+simbak.backup(...)
+```
+
+If you want a quick way to enable file logging, you can set the 
+directory for where the logs will be stored using the
+`set_file_logger()` function. Alternatively you can use the 
+[python logging library](https://docs.python.org/3/library/logging.html)
+for complete custom control over logging, but it will require more
+setup.
+
+```python
+import simbak
+from simbak.logging import set_file_logger
+
+# Will put the simbak logs into this directory.
+set_file_logger('/home/logs/backup-logs/')
 simbak.backup(...)
 ```
 
